@@ -43,7 +43,7 @@ export function App() {
     <QueryClientProvider client={queryClient}>
       <AppStateProvider>
         <ThemeSync />
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
           <Routes>
             <Route element={<Shell />}>
               <Route index element={<TodayPage />} />

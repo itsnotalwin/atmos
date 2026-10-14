@@ -2,7 +2,11 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+/** Deployed under /atmos/ on GitHub Pages; local dev and preview use /. */
+const base = process.env.VITE_BASE ?? '/';
+
 export default defineConfig({
+  base,
   plugins: [
     react(),
     VitePWA({
@@ -17,8 +21,8 @@ export default defineConfig({
         background_color: '#FAFAF8',
         display: 'standalone',
         orientation: 'portrait',
-        scope: '/',
-        start_url: '/',
+        scope: base,
+        start_url: base,
         icons: [
           { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
@@ -27,7 +31,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2,ico}'],
-        navigateFallback: '/index.html',
+        navigateFallback: `${base}index.html`,
         navigateFallbackDenylist: [/^\/api\//],
         cleanupOutdatedCaches: true,
         runtimeCaching: [
